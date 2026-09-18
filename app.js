@@ -1,7 +1,7 @@
 "use strict";
 
 // ⚠️ 배포 전 반드시 본인의 웹용 OAuth 클라이언트 ID로 교체하세요.
-const CLIENT_ID = "여기에_발급받은_웹_클라이언트_ID.apps.googleusercontent.com";
+const CLIENT_ID = "142504911114-jrai0t1og5nhhd3esceik3vvgbpdngj6.apps.googleusercontent.com";
 const SCOPES = "https://www.googleapis.com/auth/youtube.force-ssl";
 const API_BASE = "https://www.googleapis.com/youtube/v3";
 
