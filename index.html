@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>재생목록 클리너</title>
+<link rel="stylesheet" href="style.css" />
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="mark">재생목록 클리너</div>
+      <div id="account" class="account hidden"></div>
+    </header>
+
+    <div id="quota-widget" class="quota-widget hidden">
+      <div class="quota-header">
+        <span class="quota-title">오늘 API 사용량</span>
+        <button id="quota-settings-btn" class="quota-icon-btn" title="설정" aria-label="할당량 설정">⚙</button>
+      </div>
+      <div class="quota-bar-track">
+        <div id="quota-bar-fill" class="quota-bar-fill"></div>
+      </div>
+      <div class="quota-numbers">
+        <span id="quota-used">0</span> / <span id="quota-total">10,000</span> 유닛
+      </div>
+      <div class="quota-breakdown">
+        <div class="quota-row">
+          <span>스캔(조회)</span>
+          <span><span id="quota-read-count">0</span>회 · <span id="quota-read-units">0</span>유닛</span>
+        </div>
+        <div class="quota-row">
+          <span>삭제</span>
+          <span><span id="quota-delete-count">0</span>회 · <span id="quota-delete-units">0</span>유닛</span>
+        </div>
+      </div>
+      <div class="quota-remaining">삭제 약 <strong id="quota-remaining-deletes">200</strong>회 더 가능</div>
+
+      <div id="quota-settings" class="quota-settings hidden">
+        <label class="quota-settings-label">
+          일일 할당량(유닛)
+          <input id="quota-total-input" type="number" min="1" step="100" />
+        </label>
+        <button id="quota-reset-btn" class="btn btn-ghost btn-small">오늘 사용량 초기화</button>
+      </div>
+    </div>
+
+    <main id="view-signedout" class="signedout-view">
+      <div class="signedout-card">
+        <p class="lede">삭제되거나 비공개로 바뀐 영상은 재생목록에 그대로 남아 자리만 차지합니다. 구글 계정을 연결하면 어떤 영상이 문제인지 바로 찾아드립니다.</p>
+        <button id="btn-connect" class="btn btn-primary">구글 계정 연결</button>
+        <p id="signedout-error" class="error hidden"></p>
+      </div>
+    </main>
+
+    <div id="app-layout" class="app-layout hidden">
+      <aside class="sidebar">
+        <div class="row-between">
+          <h2 class="section-title">재생목록</h2>
+          <div class="sidebar-actions">
+            <button id="btn-toggle-thumbs" class="thumb-toggle" type="button" aria-pressed="true">
+              <span class="thumb-toggle-track"><span class="thumb-toggle-knob"></span></span>
+              <span class="thumb-toggle-label">썸네일</span>
+            </button>
+            <button id="btn-refresh" class="btn btn-ghost btn-small">새로고침</button>
+          </div>
+        </div>
+        <ul id="playlist-list" class="list"></ul>
+        <p id="playlists-empty" class="muted hidden">재생목록이 없습니다.</p>
+      </aside>
+
+      <section class="content">
+        <div id="content-empty" class="empty-hint">
+          <p>왼쪽에서 재생목록을 선택하면 이용 불가 영상을 확인할 수 있어요.</p>
+        </div>
+
+        <div id="content-scanning" class="scan-status hidden">
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="scan-status-text">영상 확인 중…</p>
+          <p id="scan-progress" class="muted"></p>
+        </div>
+
+        <div id="content-results" class="hidden">
+          <div class="row-between">
+            <h2 class="section-title"><span id="results-playlist-title"></span></h2>
+            <button id="btn-rescan" class="btn btn-ghost btn-small">다시 스캔</button>
+          </div>
+
+          <p id="results-summary" class="lede"></p>
+
+          <div id="results-clean" class="empty-state hidden">
+            <p>이용 불가 영상이 없습니다.</p>
+          </div>
+
+          <ul id="results-list" class="list hidden"></ul>
+
+          <div id="results-actions" class="actions hidden">
+            <button id="btn-select-all" class="btn btn-ghost btn-small">전체 선택</button>
+            <div class="actions-right">
+              <button id="btn-export" class="btn btn-ghost btn-small">CSV 내보내기</button>
+              <button id="btn-delete" class="btn btn-danger btn-small">선택 항목 삭제</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer id="footer-error" class="footer-error hidden"></footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
